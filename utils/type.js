@@ -58,7 +58,7 @@ exports.isObj = function (o) {
 };
 
 /**
- * if fn is not fucntion change to empty function
+ * if fn is not function change to empty function
  * @param fn
  * @returns {*}
  */

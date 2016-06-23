@@ -1,0 +1,42 @@
+{
+  "name": "utils-igor",
+  "version": "1.0.2",
+  "description": "Utils for nodeJs",
+  "homepage": "https://github.com/eagle7410/utils-igor",
+  "author": {
+    "name": "Igor Stcherbina",
+    "email": "verycooleagle@gmail.com",
+    "skype": "eagleeagle7410"
+  },
+  "contributors": [
+    {
+      "name": "Igor Stcherbina",
+      "email": "verycooleagle@gmail.com",
+      "skype": "eagleeagle7410"
+    }
+  ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "keywords": [
+    "utils",
+    "object",
+    "array",
+    "type",
+    "string",
+    "date",
+    "object path"
+  ],
+  "maintainers": [
+    {
+      "name": "Igor Stcherbina",
+      "email": "verycooleagle@gmail.com",
+      "skype": "eagleeagle7410"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eagle7410/utils-igor.git"
+  },
+  "_id": "utils-igor@1.0.0"
+}

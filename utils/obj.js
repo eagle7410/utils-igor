@@ -311,7 +311,7 @@ function isSet(v) {
  * @param prop
  * @returns {Array}
  */
-exports.getPropToAr = function (arObj, prop) {
+exports.getPropToArr = function (arObj, prop) {
 	var r = [];
 
 	if (!Array.isArray(arObj)) {

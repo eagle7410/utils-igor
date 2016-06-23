@@ -42,12 +42,11 @@ exports.date = function (shiftDays, unixTs) {
 	return year + '-' + month + '-' + date;
 };
 
-
 /**
  * Get date time
  * @example '2014-11-30 11:40:46'
  */
-exports.ts = function (shiftDays, unixTs) {
+exports.dateTime = function (shiftDays, unixTs) {
 	return exports.date(shiftDays, unixTs) + ' ' + exports.time(unixTs);
 };
 

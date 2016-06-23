@@ -5,6 +5,7 @@
 module.exports = function (type) {
 	var have = [
 		'type',
+		'date',
 		'arr',
 		'obj',
 		'str'
@@ -13,16 +14,16 @@ module.exports = function (type) {
 	var module = {};
 
 	if (!type) {
-		for (var i = 0, len = have; i<len; ++i) {
+		for (var i = 0, len = have.length; i<len; ++i) {
 			var tp = have[i];
 			module[tp] = require('./utils/' + tp);
 		}
 
 	} else if (Array.isArray(type)) {
-		for (var i = 0, len = type; i<len; ++i) {
+		for (var i = 0, len = type.length; i<len; ++i) {
 			var tp = type[i];
 			if (have.indexOf(tp) > -1 ) {
-				module = require('./utils/' + tp);
+				module[tp] = require('./utils/' + tp);
 			}
 		}
 	} else {
