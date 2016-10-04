@@ -1,6 +1,6 @@
 {
   "name": "utils-igor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Utils for nodeJs",
   "homepage": "https://github.com/eagle7410/utils-igor",
   "author": {
@@ -38,5 +38,5 @@
     "type": "git",
     "url": "https://github.com/eagle7410/utils-igor.git"
   },
-  "_id": "utils-igor@1.0.0"
+  "_id": "utils-igor@1.0.1"
 }

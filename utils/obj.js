@@ -133,7 +133,7 @@ exports.beInObj = function (ob, prop, def) {
  * @param obj
  * @param path
  */
-exports.pathCreate = function(obj, path) {
+exports.pathCreate = function(obj, path, def) {
 
 	if (!isSet(path)) {
 		path = obj;
@@ -145,12 +145,23 @@ exports.pathCreate = function(obj, path) {
 	}
 
 	var b = obj;
+	var len = path.length;
 
-	for (var i = 0, len = path; i<len; ++i) {
-		var next = path[i];
-		exports.beInObj(b, next);
-		b = b[next];
+	if (len === 1) {
+		exports.beInObj(b, path[0], def);
+	} else if (len > 1) {
+
+		len--;
+
+		for (var i = 0; i < len; i++) {
+			exports.beInObj(b, path[i]);
+			b = b[path[i]];
+		}
+
+
+		exports.beInObj(b, path[len], def);
 	}
+
 
 	return obj;
 };
