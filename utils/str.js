@@ -1,8 +1,10 @@
 /**
  * Created by igor on 30.05.16.
  */
+"use strict";
 
-var crypto	= require('crypto');
+const base = 'base64';
+let crypto	= require('crypto');
 
 /**
  *Return string encode/decode in base64
@@ -10,20 +12,15 @@ var crypto	= require('crypto');
  * @param decode {boolean}
  * @returns {string}
  */
-exports.base64 = function (str , decode) {
-	var bs = 'base64';
-	return !(decode || false)
-		? new Buffer(str).toString(bs)
-		: new Buffer(str,bs).toString('utf8');
-};
+exports.base64 = (str , decode) => !(decode || false)
+		? new Buffer(str).toString(base)
+		: new Buffer(str,base).toString('utf8');
 
 /**
  * Return salt
  * @return {String} salt
  */
-exports.salt = function (len) {
-	return Math.random().toString(36).substring(2, (len || 5) + 2);
-};
+exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
 
 /**
  * Return string hash
@@ -33,7 +30,7 @@ exports.salt = function (len) {
  * @param method {String} md5, sha512, sha256
  * @returns {*}
  */
-exports.hash = function (str, salt, method, secret) {
+exports.hash = (str, salt, method , secret) => {
 	method = method || 'sha512';
 	secret = secret || 'IgorStcherbina';
 
@@ -53,26 +50,36 @@ exports.hash = function (str, salt, method, secret) {
  * @param s
  * @returns {string}
  */
-module.exports.up1stChar  = function (s) {
-	return s.substring(0, 1).toUpperCase() + s.substring(1);
-};
+exports.up1stChar  = (s) => s.substring(0, 1).toUpperCase() + s.substring(1);
 
-exports.regexpEscape = function (text) {
-	return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
-};
+/**
+ * Escapes special characters for RegExp
+ * @param {String}text
+ */
+exports.regexpEscape = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 
-exports.replaceAll = function (str, find, replace) {
-	return str.replace(new RegExp(exports.regexpEscape(find), 'g'), replace);
-};
+/**
+ * Replace all find word to replace word
+ * @param {String}str
+ * @param {String}find
+ * @param {String}replace
+ */
+exports.replaceAll = (str, find, replace) => str.replace(new RegExp(exports.regexpEscape(find), 'g'), replace);
 
+/**
+ * Escapes special characters for html and trim unnecessary
+ * @param {String}str
+ * @param {Number}maxLength
+ * @returns {*}
+ */
+exports.htmlEscape = (str, maxLength) => {
 
-exports.htmlEscape = function (str, maxLength) {
 	if (str && str.length) {
 		str = exports.replaceAll(exports.replaceAll(str, '<', '&lt;'), '>', '&gt;');
 
-		if (maxLength) {
+		if (maxLength)
 			str = str.substr(0, maxLength);
-		}
+
 	}
 
 	return str;
@@ -83,46 +90,39 @@ exports.htmlEscape = function (str, maxLength) {
  * @param  {String} str string
  * @return {String} Output string
  */
-exports.oneSpace = function (str) {
-	return str.replace(/\s\s+/g, ' ').trim();
-};
-
+exports.oneSpace = (str) => str.replace(/\s\s+/g, ' ').trim();
 
 /**
  * Replace all spacial symbols to space
  * @param  {String} str string
  * @return {String} Output string
  */
-exports.removeSpecSymbols = function (str) {
-	return exports.removeSpaces(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
-};
-
+exports.removeSpecSymbols = (str) =>  exports.removeSpaces(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
 
 /**
  * It generates key specified length. Used accept symbols
  * @param n
  * @returns {string}
  */
-exports.makeKey = function (n, accept) {
+exports.makeKey = (n, accept) => {
 	n = n || 30;
 	accept = accept || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-	var t = '';
+	let t = '';
 
-	for (var i = 0; i < n; i++) {
+	for (let i = 0; i < n; i++)
 		t += accept.charAt(Math.floor(Math.random() * accept.length));
-	}
 
 	return t;
-};
 
+};
 
 /**
  * Decoding URI by all methods
  * @param {String} str
  * @returns {String}
  */
-exports.decodeURIUniversal = function (str) {
+exports.decodeURIUniversal = (str) => {
 
 	try {
 		str = decodeURIComponent(str);
@@ -135,6 +135,7 @@ exports.decodeURIUniversal = function (str) {
 	}
 
 	return str;
+
 };
 
 /**
@@ -143,6 +144,4 @@ exports.decodeURIUniversal = function (str) {
  * @param vl
  * @returns {Boolean}
  */
-exports.boolString = function (vl) {
-	return vl === 'true' ? true : false ;
-};
+exports.boolString = (vl) => vl === 'true' ? true : false ;

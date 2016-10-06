@@ -140,12 +140,11 @@ exports.pathCreate = function(obj, path, def) {
 		obj  = {};
 	}
 
-	if (typeof path === 'string') {
+	if (typeof path === 'string')
 		path = path.split('.');
-	}
 
-	var b = obj;
-	var len = path.length;
+	let b = obj;
+	let len = path.length;
 
 	if (len === 1) {
 		exports.beInObj(b, path[0], def);
@@ -153,15 +152,13 @@ exports.pathCreate = function(obj, path, def) {
 
 		len--;
 
-		for (var i = 0; i < len; i++) {
+		for (let i = 0; i < len; i++) {
 			exports.beInObj(b, path[i]);
 			b = b[path[i]];
 		}
 
-
 		exports.beInObj(b, path[len], def);
 	}
-
 
 	return obj;
 };
@@ -198,19 +195,19 @@ exports.pathVal = function(obj, path) {
 		return undefined;
 	}
 
-	var r = obj;
+	let r = obj;
 
-	if (typeof path === 'string') {
+	if (typeof path === 'string')
 		path = path.split('.');
-	}
 
-	for (var i = 0, len = path.length; i<len; ++i) {
-		var next = path[i];
-		if (r[next]) {
-			r = r[next];
-		} else {
-			return undefined;
-		}
+	for (let i = 0; i<path.length; ++i) {
+
+		let next = path[i];
+
+		if (r[next])
+				r = r[next];
+			else
+				return undefined;
 	}
 
 	return r;
@@ -246,37 +243,32 @@ exports.pathMv = function(obj, path) {
  * @param v {Object}
  * @returns {string}
  */
-module.exports.clone = function (v) {
-	var r = {};
+module.exports.clone = (v) => {
+	let r = {};
 
-	if (isObj(v)) {
-		exports.for(v, function (k, val) {
-			r[k] =v;
-		});
-	}
+	if (isObj(v))
+		exports.for(v, (k, val) => r[k] =val);
 
-	return v;
+	return r;
 };
 
 /**
  * Serialize object to url params
- * @param obj
+ * @param {Object} obj
  * @returns {string}
  */
-exports.urlParams = function (obj) {
-	var arr = [];
+exports.urlParams = (obj) => {
+	let arr = [];
 
-	exports.for(obj, function (key, val) {
-		arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val));
-	});
+	exports.for(obj, (key, val) => arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)) );
 
 	return arr.join('&');
 };
 
 /**
  * Properties in add object adding to obj or if properties not exits create him
- * @param obj
- * @param add
+ * @param {Object}obj
+ * @param {Object}add
  * @returns {*}
  */
 exports.ext = function (obj, add) {
@@ -294,9 +286,7 @@ exports.ext = function (obj, add) {
 		});
 	};
 
-	if (!obj) {
-		obj = {};
-	}
+	obj = obj || {};
 
 	if (add) {
 		j(obj, add);
@@ -312,9 +302,11 @@ function isObj(obj) {
 	return Object.prototype.toString.call(obj) === '[object Object]';
 }
 
-function isSet(v) {
-	return typeof v !== 'undefined' && v !== null;
-}
+/**
+ * Check v be no undefined or null
+ * @param {Mixed}v
+ */
+isSet = (v) => typeof v !== 'undefined' && v !== null;
 
 /**
  * Get property from array objects
@@ -325,14 +317,11 @@ function isSet(v) {
 exports.getPropToArr = function (arObj, prop) {
 	var r = [];
 
-	if (!Array.isArray(arObj)) {
-		arObj = [arObj];
-	}
+	if (!Array.isArray(arObj)) arObj = [arObj];
 
 	arObj.forEach(function (obj) {
-		if (isSet(obj[prop])) {
+		if (isSet(obj[prop]))
 			r.push(obj[prop]);
-		}
 	});
 
 	return r;
@@ -343,16 +332,13 @@ exports.getPropToArr = function (arObj, prop) {
  * @param obj
  * @returns {Array}
  */
-exports.propToArr = function (obj) {
-	var arr = [];
+exports.propToArr = (obj) => {
+	let arr = [];
 
-	if (!isObj(obj)) {
+	if (!isObj(obj))
 		return arr;
-	}
 
-	exports.for(function (key) {
-		arr.push(obj[key]);
-	});
+	exports.for((key) => arr.push(obj[key]));
 
 	return arr;
 };
@@ -380,21 +366,13 @@ exports.for = function (obj, fn) {
  * @param o
  * @returns {boolean}
  */
-exports.isEmpty = function (obj) {
-	if (!isObj(obj)) {
-		return true;
-	}
-
-	var k = Object.keys(obj);
-
-	return k.length ? false : true ;
-};
+exports.isEmpty = (obj) => !isObj(obj) || !Object.keys(obj).length;
 
 /**
  * If the object property exists, its rounded
  * @param ob
  * @param round
  */
-exports.beRound = function (ob, prop, round) {
+exports.beRound = (ob, prop, round) => {
 	if (ob[prop]) ob[prop] = isNaN(ob[prop]) ? 0 :  Number(parseFloat(Number(ob[prop])).toFixed(round));
 };
