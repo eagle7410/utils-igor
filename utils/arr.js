@@ -1,6 +1,15 @@
 /**
  * Created by igor on 30.05.16.
  */
+"use strict";
+
+/**
+ * Check parametr be array. if not return empty array
+ * @param {Mixed} arr
+ */
+exports.check = (arr) => Array.isArray(arr) ? [] : arr;
+
+let check = exports.check;
 
 /**
  * By default the sort method sorts elements alphabetically.
@@ -10,34 +19,14 @@
  * @param b
  * @returns {number}
  */
-exports.sortNumber = function (a, b) {
-	return parseFloat(a) - parseFloat(b);
-};
-
-
+exports.sortNumber = (a, b)  => parseFloat(a) - parseFloat(b);
 /**
  *  Return share part of the array
  * @param arr1
  * @param arr2
  * @returns {Array}
  */
-module.exports.share = function (arr1, arr2) {
-	var r = [];
-
-	if (!Array.isArray(arr1)) {
-		arr1 = [];
-	}
-
-	if (!Array.isArray(arr2)) {
-		arr2 = [];
-	}
-
-	r = arr1.filter(function (val) {
-		return arr2.indexOf(val) !== -1;
-	});
-
-	return r;
-};
+module.exports.share = (arr1, arr2) => check(arr1).filter( (val) => check(arr2).indexOf(val) !== -1 );
 
 /**
  * Return different part of the array
@@ -45,25 +34,13 @@ module.exports.share = function (arr1, arr2) {
  * @param	{Array} arr2
  * @return {Array}
  */
-exports.diff = function (arr1, arr2) {
-	if (Array.isArray(arr1)) {
-		return arr1.filter(function (i) {
-			return arr2.indexOf(i) === -1;
-		});
-	} else {
-		return [];
-	}
-};
+exports.diff =  (arr1, arr2) => Array.isArray(arr2) ? check(arr1).filter((i) => arr2.indexOf(i) === -1 ) : [] ;
 
 /**
  * Clear repeat values
  * @param {Array} arr
  */
-exports.unique = function (arr) {
-	return arr.filter(function (value, index, self) {
-		return self.indexOf(value) === index;
-	});
-};
+exports.unique = (arr) => check(arr).filter((value, index, self) => self.indexOf(value) === index);
 
 /**
  * Delete all elements whith specified value
@@ -71,74 +48,39 @@ exports.unique = function (arr) {
  * @param {Mixed} value значение
  * @constructor
  */
-exports.mvVal = function (arr, value) {
-
-	for (var i = 0; i < arr.length; i++) {
-		if (arr[i] === value) {
-			arr.splice(i, 1);
-			--i;
-		}
-	}
-
-	return arr;
-};
+exports.mvVal = (arr, value) => check(arr).filter((i) => arr[i] !== value);
 
 /**
  * Sum of array elements
  * @return {Number}
  */
-exports.sum = function (a) {
-	var r = 0;
-
-	if (Array.isArray(a)) {
-		r = a.reduce(function (pv, cv){
-			return (isNaN(pv) ? 0 : Number(pv))+(isNaN(cv) ? 0 : Number(cv))
-		}, 0);
-	}
-
-	return r;
-};
+exports.sum = (a) => (Array.isArray(a)) ? a.reduce( (pv, cv) => (isNaN(pv) ? 0 : Number(pv))+(isNaN(cv) ? 0 : Number(cv)), 0) : 0;
 
 /**
  * Return average elements array
  * @param a
  * @returns {number}
  */
-exports.avg = function (a) {
-	var r = 0
-
-	if (!Array.isArray(a) || !a.length ) {
-		return r;
-	}
-
-	return exports.sum(a) / a.length;
-}
+exports.avg = (a) => (!Array.isArray(a) || !a.length ) ? 0 : exports.sum(a) / a.length;
 
 /**
  * Return array. When element is url collect from specified array
  * @param arr
  * @returns {Array}
  */
-exports.urls = function (arr) {
-	var r = [];
+exports.urls = (arr) => {
+	let r = [];
 	arr = arr || [];
 	arr = Array.isArray(arr) ? arr : [arr];
 
-	for (var i = 0, len = arr.length; i<len; ++i) {
-		var el = arr[i];
-		if (!el) {
-			return;
-		}
+	for (let i = 0; i< arr.length; ++i) {
+		let el = arr[i] || '';
 
 		el = el.trim().toLowerCase();
 
-		if (el.indexOf('://') === -1) {
-			el = 'http://' + el;
-		}
+		if (el.indexOf('://') === -1) el = 'http://' + el;
 
-		if (/^htt(p|ps)\:\/\/(.*)+\.(.*)+$/.test(el)) {
-			r.push(el);
-		}
+		if (/^htt(p|ps)\:\/\/(.*)+\.(.*)+$/.test(el)) r.push(el);
 	}
 
 	return r;
