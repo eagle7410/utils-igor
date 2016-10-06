@@ -8,7 +8,7 @@
  * @param {Mixed} arr
  */
 
-exports.check = arr => Array.isArray(arr) ? [] : arr;
+exports.check = arr => Array.isArray(arr) ? arr : [];
 
 let check = exports.check;
 

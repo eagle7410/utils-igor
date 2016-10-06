@@ -7,7 +7,7 @@
  * Check parametr be array. if not return empty array
  * @param {Mixed} arr
  */
-exports.check = (arr) => Array.isArray(arr) ? [] : arr;
+exports.check = (arr) => Array.isArray(arr) ? arr : [];
 
 let check = exports.check;
 

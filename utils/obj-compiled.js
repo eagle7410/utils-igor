@@ -12,7 +12,7 @@
 exports.arrToObjByKey = function (arr, prop, fnIterProp) {
 	var obj = {};
 
-	for (var i = 0, len = arr.length; i<len; ++i) {
+	for (var i = 0, len = arr.length; i < len; ++i) {
 		var el = arr[i];
 
 		if (el[prop]) {
@@ -48,13 +48,12 @@ exports.keysChange = function (obj, keys) {
 	}
 
 	if (obj && Array.isArray(arKey)) {
-		for (var i = 0, len = arKey.length; i<len; ++i) {
+		for (var i = 0, len = arKey.length; i < len; ++i) {
 			var k = arKey[i];
 
 			if (obj[k] || obj[k] === false) {
-				r[isNewkey ? keys[k] : k ] = obj[k];
+				r[isNewkey ? keys[k] : k] = obj[k];
 			}
-
 		}
 	}
 
@@ -76,7 +75,7 @@ exports.sort = function (obj, down) {
 		keys.reverse();
 	}
 
-	for (var i = 0, len = keys.length; i<len; ++i) {
+	for (var i = 0, len = keys.length; i < len; ++i) {
 		var k = keys[i];
 		r[k] = obj[k];
 	}
@@ -133,15 +132,14 @@ exports.beInObj = function (ob, prop, def) {
  * @param obj
  * @param path
  */
-exports.pathCreate = function(obj, path, def) {
+exports.pathCreate = function (obj, path, def) {
 
 	if (!isSet(path)) {
 		path = obj;
-		obj  = {};
+		obj = {};
 	}
 
-	if (typeof path === 'string')
-		path = path.split('.');
+	if (typeof path === 'string') path = path.split('.');
 
 	let b = obj;
 	let len = path.length;
@@ -189,7 +187,7 @@ exports.isPathExist = function (obj, path) {
  * @param path
  * @returns {*}
  */
-exports.pathVal = function(obj, path) {
+exports.pathVal = function (obj, path) {
 
 	if (!isSet(obj) || !isObj(obj)) {
 		return undefined;
@@ -197,17 +195,13 @@ exports.pathVal = function(obj, path) {
 
 	let r = obj;
 
-	if (typeof path === 'string')
-		path = path.split('.');
+	if (typeof path === 'string') path = path.split('.');
 
-	for (let i = 0; i<path.length; ++i) {
+	for (let i = 0; i < path.length; ++i) {
 
 		let next = path[i];
 
-		if (r[next])
-				r = r[next];
-			else
-				return undefined;
+		if (r[next]) r = r[next];else return undefined;
 	}
 
 	return r;
@@ -219,7 +213,7 @@ exports.pathVal = function(obj, path) {
  * @param path
  * @returns {*}
  */
-exports.pathMv = function(obj, path) {
+exports.pathMv = function (obj, path) {
 
 	if (exports.isString(path)) {
 		path = path.split('.');
@@ -243,11 +237,10 @@ exports.pathMv = function(obj, path) {
  * @param v {Object}
  * @returns {string}
  */
-module.exports.clone = (v) => {
+module.exports.clone = v => {
 	let r = {};
 
-	if (isObj(v))
-		exports.for(v, (k, val) => r[k] =val);
+	if (isObj(v)) exports.for(v, (k, val) => r[k] = val);
 
 	return r;
 };
@@ -257,10 +250,10 @@ module.exports.clone = (v) => {
  * @param {Object} obj
  * @returns {string}
  */
-exports.urlParams = (obj) => {
+exports.urlParams = obj => {
 	let arr = [];
 
-	exports.for(obj, (key, val) => arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)) );
+	exports.for(obj, (key, val) => arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)));
 
 	return arr.join('&');
 };
@@ -306,7 +299,7 @@ function isObj(obj) {
  * Check v be no undefined or null
  * @param {Mixed}v
  */
-isSet = (v) => typeof v !== 'undefined' && v !== null;
+isSet = v => typeof v !== 'undefined' && v !== null;
 
 /**
  * Get property from array objects
@@ -320,8 +313,7 @@ exports.getPropToArr = function (arObj, prop) {
 	if (!Array.isArray(arObj)) arObj = [arObj];
 
 	arObj.forEach(function (obj) {
-		if (isSet(obj[prop]))
-			r.push(obj[prop]);
+		if (isSet(obj[prop])) r.push(obj[prop]);
 	});
 
 	return r;
@@ -332,13 +324,12 @@ exports.getPropToArr = function (arObj, prop) {
  * @param obj
  * @returns {Array}
  */
-exports.propToArr = (obj) => {
+exports.propToArr = obj => {
 	let arr = [];
 
-	if (!isObj(obj))
-		return arr;
+	if (!isObj(obj)) return arr;
 
-	exports.for((key) => arr.push(obj[key]));
+	exports.for(key => arr.push(obj[key]));
 
 	return arr;
 };
@@ -350,11 +341,11 @@ exports.propToArr = (obj) => {
  */
 exports.for = function (obj, fn) {
 	if (isObj(obj)) {
-		fn = typeof fn !== 'function' ? function(){} : fn;
+		fn = typeof fn !== 'function' ? function () {} : fn;
 
 		var keys = Object.keys(obj);
 
-		for (var i = 0, len = keys.length; i<len; ++i) {
+		for (var i = 0, len = keys.length; i < len; ++i) {
 			var inx = keys[i];
 			fn(inx, obj[inx]);
 		}
@@ -366,7 +357,7 @@ exports.for = function (obj, fn) {
  * @param o
  * @returns {boolean}
  */
-exports.isEmpty = (obj) => !isObj(obj) || !Object.keys(obj).length;
+exports.isEmpty = obj => !isObj(obj) || !Object.keys(obj).length;
 
 /**
  * If the object property exists, its rounded
@@ -374,5 +365,7 @@ exports.isEmpty = (obj) => !isObj(obj) || !Object.keys(obj).length;
  * @param round
  */
 exports.beRound = (ob, prop, round) => {
-	if (ob[prop]) ob[prop] = isNaN(ob[prop]) ? 0 :  Number(parseFloat(Number(ob[prop])).toFixed(round));
+	if (ob[prop]) ob[prop] = isNaN(ob[prop]) ? 0 : Number(parseFloat(Number(ob[prop])).toFixed(round));
 };
+
+//# sourceMappingURL=obj-compiled.js.map

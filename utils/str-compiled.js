@@ -4,7 +4,7 @@
 "use strict";
 
 const base = 'base64';
-let crypto	= require('crypto');
+let crypto = require('crypto');
 
 /**
  *Return string encode/decode in base64
@@ -12,15 +12,13 @@ let crypto	= require('crypto');
  * @param decode {boolean}
  * @returns {string}
  */
-exports.base64 = (str , decode) => !(decode || false)
-		? new Buffer(str).toString(base)
-		: new Buffer(str,base).toString('utf8');
+exports.base64 = (str, decode) => !(decode || false) ? new Buffer(str).toString(base) : new Buffer(str, base).toString('utf8');
 
 /**
  * Return salt
  * @return {String} salt
  */
-exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
+exports.salt = len => Math.random().toString(36).substring(2, (len || 5) + 2);
 
 /**
  * Return string hash
@@ -30,19 +28,19 @@ exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
  * @param method {String} md5, sha512, sha256
  * @returns {*}
  */
-exports.hash = (str, salt, method , secret) => {
-	method = method || 'sha512';
-	secret = secret || 'IgorStcherbina';
+exports.hash = (str, salt, method, secret) => {
+  method = method || 'sha512';
+  secret = secret || 'IgorStcherbina';
 
-	var sha = crypto.createHmac(method, secret);
+  var sha = crypto.createHmac(method, secret);
 
-	sha.update(String(str), 'utf8');
+  sha.update(String(str), 'utf8');
 
-	if (salt) {
-		sha.update(salt);
-	}
+  if (salt) {
+    sha.update(salt);
+  }
 
-	return sha.digest('hex');
+  return sha.digest('hex');
 };
 
 /**
@@ -50,13 +48,13 @@ exports.hash = (str, salt, method , secret) => {
  * @param s
  * @returns {string}
  */
-exports.up1stChar  = (s) => s.substring(0, 1).toUpperCase() + s.substring(1);
+exports.up1stChar = s => s.substring(0, 1).toUpperCase() + s.substring(1);
 
 /**
  * Escapes special characters for RegExp
  * @param {String}text
  */
-exports.regexpEscape = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
+exports.regexpEscape = text => text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 
 /**
  * Replace all find word to replace word
@@ -74,15 +72,13 @@ exports.replaceAll = (str, find, replace) => str.replace(new RegExp(exports.rege
  */
 exports.htmlEscape = (str, maxLength) => {
 
-	if (str && str.length) {
-		str = exports.replaceAll(exports.replaceAll(str, '<', '&lt;'), '>', '&gt;');
+  if (str && str.length) {
+    str = exports.replaceAll(exports.replaceAll(str, '<', '&lt;'), '>', '&gt;');
 
-		if (maxLength)
-			str = str.substr(0, maxLength);
+    if (maxLength) str = str.substr(0, maxLength);
+  }
 
-	}
-
-	return str;
+  return str;
 };
 
 /**
@@ -90,14 +86,14 @@ exports.htmlEscape = (str, maxLength) => {
  * @param  {String} str string
  * @return {String} Output string
  */
-exports.oneSpace = (str) => str.replace(/\s\s+/g, ' ').trim();
+exports.oneSpace = str => str.replace(/\s\s+/g, ' ').trim();
 
 /**
  * Replace all spacial symbols to space
  * @param  {String} str string
  * @return {String} Output string
  */
-exports.removeSpecSymbols = (str) =>  exports.removeSpaces(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
+exports.removeSpecSymbols = str => exports.removeSpaces(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
 
 /**
  * It generates key specified length. Used accept symbols
@@ -105,16 +101,14 @@ exports.removeSpecSymbols = (str) =>  exports.removeSpaces(str.replace(/[&\/\\#,
  * @returns {string}
  */
 exports.makeKey = (n, accept) => {
-	n = n || 30;
-	accept = accept || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  n = n || 30;
+  accept = accept || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-	let t = '';
+  let t = '';
 
-	for (let i = 0; i < n; i++)
-		t += accept.charAt(Math.floor(Math.random() * accept.length));
+  for (let i = 0; i < n; i++) t += accept.charAt(Math.floor(Math.random() * accept.length));
 
-	return t;
-
+  return t;
 };
 
 /**
@@ -122,20 +116,19 @@ exports.makeKey = (n, accept) => {
  * @param {String} str
  * @returns {String}
  */
-exports.decodeURIUniversal = (str) => {
+exports.decodeURIUniversal = str => {
 
-	try {
-		str = decodeURIComponent(str);
-	} catch (err) {
-		try {
-			str = decodeURI(str);
-		} catch (err) {
-			str = str || '';
-		}
-	}
+  try {
+    str = decodeURIComponent(str);
+  } catch (err) {
+    try {
+      str = decodeURI(str);
+    } catch (err) {
+      str = str || '';
+    }
+  }
 
-	return str;
-
+  return str;
 };
 
 /**
@@ -144,4 +137,6 @@ exports.decodeURIUniversal = (str) => {
  * @param vl
  * @returns {Boolean}
  */
-exports.boolString = (vl) => vl === 'true' ? true : false ;
+exports.boolString = vl => vl === 'true' ? true : false;
+
+//# sourceMappingURL=str-compiled.js.map
