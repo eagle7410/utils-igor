@@ -1,0 +1,1 @@
+{"version":3,"sources":["test.js"],"names":[],"mappings":"AAAA;;;;AAIA,QAAQ,cAAR,EAAwB,MAAM;AAC7B,KAAI,EAAJ;AACA,CAFD","file":"test-compiled.js","sourcesContent":["/**\n * Created by igor on 06.10.16.\n */\n\ndecribe('module|array', () => {\n\tit( '')\n});\n"]}
