@@ -117,4 +117,14 @@ describe('array', () => {
 	});
 });
 
+describe('date', () => {
+	it('date', done => {
+		if (utils.date.date(null, 1475825004412) === '2016-10-07') {
+			throw 'Bab work ' + utils.date.date(null, 1475825004412);
+		}
+
+		done();
+	});
+});
+
 //# sourceMappingURL=test-compiled.js.map

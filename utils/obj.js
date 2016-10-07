@@ -1,7 +1,7 @@
 /**
  * Created by igor on 30.05.16.
  */
-
+"use strict";
 /**
  * Return object. When keys is specified property, value is object from array objects
  * @param arr
@@ -306,7 +306,7 @@ function isObj(obj) {
  * Check v be no undefined or null
  * @param {Mixed}v
  */
-isSet = (v) => typeof v !== 'undefined' && v !== null;
+let isSet = (v) => typeof v !== 'undefined' && v !== null;
 
 /**
  * Get property from array objects

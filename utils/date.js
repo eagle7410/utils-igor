@@ -1,45 +1,36 @@
 /**
  * Created by igor on 30.05.16.
  */
+"use strict";
+
+/**
+ * Return date (now or by unixTime).
+ * @param {Number}unixTs
+ */
+var date = (unixTs) => (unixTs ? new Date(unixTs) : new Date());
 
 /**
  * Get time
  * @example '11:40:46'
  */
-exports.time = function (unixTs) {
-	var now;
-
-	if (unixTs) {
-		now = new Date(unixTs);
-	} else {
-		now = new Date();
-	}
-
-	return (/(\d{2}:\d{2}:\d{2})/.exec(now.toTimeString())[1]);
-};
-
+exports.time = (unixTs) => (/(\d{2}:\d{2}:\d{2})/.exec(date(unixTs).toTimeString())[1]);
 /**
  * Get date
  * @example '2014-11-30'
  */
-exports.date = function (shiftDays, unixTs) {
-	var now;
+exports.date = (shiftDays, unixTs) => {
 
-	if (unixTs) {
-		now = new Date(unixTs);
-	} else {
-		now = new Date();
-	}
+	let now = date(unixTs);
 
 	if (shiftDays) {
 		now.setDate(now.getDate() + Number(shiftDays));
 	}
 
-	var year = now.getFullYear();
-	var month = now.getMonth() + 1; month = (month >= 10 ? month : '0' + month);
-	var date = now.getDate(); date = (date >= 10 ? date : '0' + date);
+	let year = now.getFullYear(),
+		month = now.getMonth() + 1; month = (month >= 10 ? month : '0' + month),
+		date = now.getDate();
 
-	return year + '-' + month + '-' + date;
+	return year + '-' + month + '-' + (date >= 10 ? date : '0' + date);
 };
 
 /**
