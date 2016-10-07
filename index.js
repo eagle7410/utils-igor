@@ -2,8 +2,15 @@
  * Created by igor on 30.05.16.
  */
 
-module.exports = function (type) {
-	var have = [
+"use strict";
+
+/**
+ * Login includes modules
+ * @param {mixed}type
+ * @returns {{}}
+ */
+module.exports = (type) => {
+	let have = [
 		'type',
 		'date',
 		'arr',
@@ -11,26 +18,19 @@ module.exports = function (type) {
 		'str'
 	];
 
-	var module = {};
+	let module = {};
 
-	if (!type) {
-		for (var i = 0, len = have.length; i<len; ++i) {
-			var tp = have[i];
-			module[tp] = require('./utils/' + tp);
-		}
+	if (!type)
+		for (let i = 0; i<have.length; ++i)
+			module[have[i]] = require('./utils/' + have[i]);
 
-	} else if (Array.isArray(type)) {
-		for (var i = 0, len = type.length; i<len; ++i) {
-			var tp = type[i];
-			if (have.indexOf(tp) > -1 ) {
-				module[tp] = require('./utils/' + tp);
-			}
-		}
-	} else {
-		if (have.indexOf(type) > -1 ) {
+	 else if (Array.isArray(type))
+		for (var i = 0, len = type.length; i<len; ++i)
+			if (have.indexOf(type[i]) > -1 )
+				module[type[i]] = require('./utils/' + type[i]);
+	 else
+		if (have.indexOf(type) > -1 )
 			module = require('./utils/' + type);
-		}
-	}
 
 	return module;
-}
+};

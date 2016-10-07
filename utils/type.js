@@ -1,94 +1,71 @@
 /**
  * Created by igor on 30.05.16.
  */
-
+"use strict";
 /**
  * Check s is string
- * @param v
+ * @param {Mixed}s
  * @returns {boolean}
  */
-exports.isString = function (s) {
-	return Object.prototype.toString.call(s) === '[object String]';
-};
+exports.isString = (s) => Object.prototype.toString.call(s) === '[object String]';
 
 /**
  * Check v is not null or undefined
- * @param v
+ * @param {Mixed}v
  * @returns {boolean}
  */
-exports.isSet = function (v) {
-	return typeof v !== 'undefined' && v !== null;
-};
-
-/**
- *  if n is number return true else false
- * @param n
- * @returns {*}
- */
-exports.isNm = function (n) {
-	var r;
-
-	if (isNaN(n)) {
-		r = false;
-	} else {
-		n = Number(n);
-		r = true;
-	}
-
-	return r;
-};
+exports.isSet = (v) => typeof v !== 'undefined' && v !== null;
 
 /**
  * Empty function
  */
-exports.noop = function () {};
+exports.noop = () => {};
 
 /**
  * if f is function return true else false
- * @param f
+ * @param {Function}f
  * @returns {boolean}
  */
-exports.isFn = function (f) {
-	return typeof f === 'function';
-};
+exports.isFn = (f) => typeof f === 'function';
 
-
-exports.isObj = function (o) {
-	return Object.prototype.toString.call(o) === '[object Object]';
-};
+/**
+ * Check parameter is object
+ * @param {Mixed}o
+ */
+exports.isObj = (o) => Object.prototype.toString.call(o) === '[object Object]';
 
 /**
  * if fn is not function change to empty function
- * @param fn
+ * @param {Function}fn
  * @returns {*}
  */
-exports.beFn = function (fn) {
-	return !exports.isFn(fn) ? exports.noop : fn;
-};
+exports.beFn = (fn) => !exports.isFn(fn) ? exports.noop : fn;
 
 /**
  * Return new instance variable v
- * @param v {Mixed}
+ * @param {Mixed} v
  * @returns {string}
  */
-module.exports.cloneVar = function (v) {
-	var tp = null;
+exports.cloneVar = (v) => {
+	let tp;
 
 	if (Array.isArray(v)) {
 		tp = [];
-		v.forEach(function (el) {
-			tp.push(el);
-		});
-	} else if (exports.isNm(v)) {
+		v.forEach((el) => tp.push(el));
+	} else if (exports.isNm(v))
 		tp = 0 + v;
-	} else if(exports.isObj(v)) {
+	 else if(exports.isObj(v)) {
 		tp = {};
-		Object.keys(v).forEach(function (k) {
-			tp[k] = v[k];
-		});
+		Object.keys(v).forEach((k) => tp[k] = v[k]);
 	} else if(exports.isString(v)) {
 		tp = '' + v;
 	}
 
-	return tp;
+	return tp || null;
 };
+
+/**
+ * Check this value is number
+ * @param {Number}n
+ */
+exports.isNm = (n) => typeof n === 'number';

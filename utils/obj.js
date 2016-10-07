@@ -2,25 +2,29 @@
  * Created by igor on 30.05.16.
  */
 
+"use strict";
+
 /**
  * Return object. When keys is specified property, value is object from array objects
- * @param arr
- * @param prop
- * @param fn
+ * @param {Array}arr
+ * @param {String}prop
+ * @param {Function}fn
  * @returns {{}}
  */
-exports.arrToObjByKey = function (arr, prop, fnIterProp) {
+exports.arrToObjByKey = (arr, prop, fnIterProp) => {
 	var obj = {};
 
-	for (var i = 0, len = arr.length; i<len; ++i) {
-		var el = arr[i];
+	if (!Array.isArray(arr))
+		return obj;
+
+	for (let i = 0; i< arr.length; ++i) {
+		let el = arr[i];
 
 		if (el[prop]) {
-			var key = el[prop];
+			let key = el[prop];
 
-			if (typeof fnIterProp === 'function') {
-				key = fnIterProp(key);
-			}
+			if (typeof fnIterProp === 'function')
+				key = fnIterProp(key, el);
 
 			obj[key] = el;
 		}
@@ -31,29 +35,28 @@ exports.arrToObjByKey = function (arr, prop, fnIterProp) {
 
 /**
  * Get properties from obj by keys
- * @param obj
- * @param keys {Mixed} {keyOld : keyNew,...}
+ * @param {object} obj
+ * @param {Mixed} keys {keyOld : keyNew,...}
  * @returns {{}}
  */
-exports.keysChange = function (obj, keys) {
-	var r = {};
-	var arKey;
-	var isNewkey = false;
+exports.keysChange = (obj, keys) => {
+	let r = {},
+		arKey,
+		isNewkey = false;
 
 	if (isObj(keys)) {
 		arKey = Object.keys(keys);
 		isNewkey = true;
-	} else {
-		arKey = keys;
-	}
+	} else
+		 arKey = keys;
+
 
 	if (obj && Array.isArray(arKey)) {
-		for (var i = 0, len = arKey.length; i<len; ++i) {
-			var k = arKey[i];
+		for (let i = 0; i<arKey.length; ++i) {
+			let k = arKey[i];
 
-			if (obj[k] || obj[k] === false) {
+			if (obj[k] || obj[k] === false)
 				r[isNewkey ? keys[k] : k ] = obj[k];
-			}
 
 		}
 	}
@@ -63,51 +66,48 @@ exports.keysChange = function (obj, keys) {
 
 /**
  * Return new object when keys be sort
- * @param obj
+ * @param {Object}obj
  * @returns {{}}
  */
-exports.sort = function (obj, down) {
+exports.sort = (obj, down) => {
 	down = down || false;
 
-	var r = {};
-	var keys = Object.keys(obj).sort();
+	let r = {},
+		keys = Object.keys(obj).sort();
 
-	if (down) {
+	if (down)
 		keys.reverse();
-	}
 
-	for (var i = 0, len = keys.length; i<len; ++i) {
-		var k = keys[i];
-		r[k] = obj[k];
-	}
+
+	for (let i = 0; i<keys.length; i++)
+		r[keys[i]] = obj[keys[i]];
 
 	return r;
+
 };
 
 /**
  * Increment object property to the specified value
- * @param obj {Object}
- * @param prop {String}
- * @param byVal {Number}
- */
-exports.propInc = function (obj, prop, byVal) {
-	var val = byVal || 1;
+ * @param {Object} obj
+ * @param {String} prop
+ * @param {Number} byVal
+ * */
+exports.propInc = (obj, prop, byVal) => {
+	let val = byVal || 1;
 
 	val = isNaN(val) ? 1 : Number(val);
 
-	if (!isObj(obj)) {
+	if (!isObj(obj))
 		return obj;
-	}
 
-	if (obj[prop] === undefined) {
+	if (obj[prop] === undefined)
 		obj[prop] = val;
-	} else {
+	 else {
 
-		if (isNaN(obj[prop])) {
+		if (isNaN(obj[prop]))
 			return obj;
-		} else {
-			obj[prop] = Number(obj[prop]);
-		}
+		else
+			 obj[prop] = Number(obj[prop]);
 
 		obj[prop] += val;
 	}
@@ -117,10 +117,11 @@ exports.propInc = function (obj, prop, byVal) {
 
 /**
  * Check is set object. If not, it creates it with the specified value
- * @param ob
- * @param def
+ * @param {Object}ob
+ * @param {String}prop
+ * @param {Object}def
  */
-exports.beInObj = function (ob, prop, def) {
+exports.beInObj = (ob, prop, def) => {
 	if (def === undefined) def = {};
 
 	if (ob && !ob[prop]) ob[prop] = def;
@@ -130,8 +131,8 @@ exports.beInObj = function (ob, prop, def) {
 
 /**
  * Create path in object
- * @param obj
- * @param path
+ * @param {Object}obj
+ * @param {Mixed}path
  */
 exports.pathCreate = function(obj, path, def) {
 
@@ -146,9 +147,9 @@ exports.pathCreate = function(obj, path, def) {
 	let b = obj;
 	let len = path.length;
 
-	if (len === 1) {
+	if (len === 1)
 		exports.beInObj(b, path[0], def);
-	} else if (len > 1) {
+	 else if (len > 1) {
 
 		len--;
 
@@ -165,35 +166,34 @@ exports.pathCreate = function(obj, path, def) {
 
 /**
  * Check exist path in object
- * @param obj
- * @param path {Mixed}
+ * @param {Object}obj
+ * @param {Mixed} path
  * @returns {Boolean}
  */
-exports.isPathExist = function (obj, path) {
-	var arPath = [];
+exports.isPathExist = (obj, path) => {
+	let arPath = [];
 
-	if (typeof path === 'string') {
+	if (typeof path === 'string')
 		arPath = path.split('.');
-	} else if (Array.isArray(path)) {
-		arPath = path;
-	}
+	 else if (Array.isArray(path))
+		 arPath = path;
+
 
 	if (!arPath.length) return true;
-	var p = arPath.shift();
-	return obj.hasOwnProperty(p) || obj[p] === undefined ? exports.isSetByPath(obj[p], arPath) : false;
+	let p = arPath.shift();
+	return obj.hasOwnProperty(p) || obj[p] !== undefined ? exports.isPathExist(obj[p], arPath) : false;
 };
 
 /**
  * Get element by path in object
- * @param obj
- * @param path
+ * @param {Object}obj
+ * @param {String}path
  * @returns {*}
  */
-exports.pathVal = function(obj, path) {
+exports.pathVal = (obj, path) => {
 
-	if (!isSet(obj) || !isObj(obj)) {
+	if (!isSet(obj) || !isObj(obj))
 		return undefined;
-	}
 
 	let r = obj;
 
@@ -205,9 +205,9 @@ exports.pathVal = function(obj, path) {
 		let next = path[i];
 
 		if (r[next])
-				r = r[next];
-			else
-				return undefined;
+			r = r[next];
+		 else
+			 return undefined;
 	}
 
 	return r;
@@ -215,41 +215,28 @@ exports.pathVal = function(obj, path) {
 
 /**
  * Delete element by path in object
- * @param obj
- * @param path
+ * @param {Object}obj
+ * @param {String}path
  * @returns {*}
  */
-exports.pathMv = function(obj, path) {
+exports.pathMv = (obj, path) => {
 
-	if (exports.isString(path)) {
-		path = path.split('.');
-	}
+	if (typeof path === 'string')
+		 path = path.split('.');
 
-	if (!exports.isSet(obj) || !exports.isObj(obj) || !exports.isSetByPath(obj, [].concat(path))) {
+	if (
+		!isSet(obj) ||
+		!isObj(obj) ||
+		!exports.isPathExist(obj, [].concat(path))
+		)
 		return null;
-	}
 
-	path = path.map(function (el) {
-		return '["' + el + '"]';
-	});
 
-	eval('delete obj' + path.join('') + ';');
+	path = path.map( (el) => `["${el}"]` );
+
+	eval(`delete obj${path.join('')}`);
 
 	return true;
-};
-
-/**
- * Return new instance object v
- * @param v {Object}
- * @returns {string}
- */
-module.exports.clone = (v) => {
-	let r = {};
-
-	if (isObj(v))
-		exports.for(v, (k, val) => r[k] =val);
-
-	return r;
 };
 
 /**
@@ -271,65 +258,64 @@ exports.urlParams = (obj) => {
  * @param {Object}add
  * @returns {*}
  */
-exports.ext = function (obj, add) {
-	var j = function (obj, op) {
+exports.ext = (obj, add) => {
+	let j = (obj, op) => {
 		exports.for(op, function (k, val) {
-			if (isObj(val)) {
-				if (!obj[k]) {
+			if (isObj(val))
+				if (!obj[k])
 					obj[k] = val;
-				} else {
-					j(obj[k], val);
-				}
-			} else {
-				obj[k] = val;
-			}
+				 else
+					 j(obj[k], val);
+
+			 else
+				 obj[k] = val;
+
 		});
 	};
 
 	obj = obj || {};
 
-	if (add) {
+	if (add)
 		j(obj, add);
-	}
 
 	return obj;
 };
 
 /**
  * Check is object
+ * @param {Object}obj
+ * @returns {boolean}
  */
-function isObj(obj) {
-	return Object.prototype.toString.call(obj) === '[object Object]';
-}
+let isObj = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
 /**
  * Check v be no undefined or null
  * @param {Mixed}v
  */
-isSet = (v) => typeof v !== 'undefined' && v !== null;
+let isSet = (v) => typeof v !== 'undefined' && v !== null;
 
 /**
  * Get property from array objects
- * @param arObj
- * @param prop
+ * @param {Array}arObj
+ * @param {String}prop
  * @returns {Array}
  */
-exports.getPropToArr = function (arObj, prop) {
-	var r = [];
+exports.getPropToArr = (arObj, prop) => {
+
+	let r = [];
 
 	if (!Array.isArray(arObj)) arObj = [arObj];
 
-	arObj.forEach(function (obj) {
-		if (isSet(obj[prop]))
-			r.push(obj[prop]);
-	});
+	for (let i = 0; i<arObj.length; ++i)
+		if (isSet(arObj[i][prop]))
+			r.push(arObj[i][prop]);
 
 	return r;
 };
 
 /**
  * Collect object property to array
- * @param obj
+ * @param {Object}obj
  * @returns {Array}
  */
 exports.propToArr = (obj) => {
@@ -338,41 +324,43 @@ exports.propToArr = (obj) => {
 	if (!isObj(obj))
 		return arr;
 
-	exports.for((key) => arr.push(obj[key]));
+	exports.for(obj, (key) => arr.push(obj[key]));
 
 	return arr;
 };
 
 /**
  * ForEach for Object fn(key, val)
- * @param obj
- * @param fn
+ * @param {Object}obj
+ * @param {Function}fn
  */
-exports.for = function (obj, fn) {
+exports.for = (obj, fn) => {
+
 	if (isObj(obj)) {
 		fn = typeof fn !== 'function' ? function(){} : fn;
 
-		var keys = Object.keys(obj);
+		let keys = Object.keys(obj);
 
-		for (var i = 0, len = keys.length; i<len; ++i) {
-			var inx = keys[i];
-			fn(inx, obj[inx]);
-		}
+		for (let i = 0, len = keys.length; i<len; ++i)
+			fn(keys[i], obj[keys[i]]);
+
 	}
 };
 
 /**
  * if o is object return true else false
- * @param o
+ * @param {Object}obj
  * @returns {boolean}
  */
 exports.isEmpty = (obj) => !isObj(obj) || !Object.keys(obj).length;
 
 /**
  * If the object property exists, its rounded
- * @param ob
- * @param round
+ * @param {Object}ob
+ * @param {String}prop
+ * @param {Number}round
  */
 exports.beRound = (ob, prop, round) => {
 	if (ob[prop]) ob[prop] = isNaN(ob[prop]) ? 0 :  Number(parseFloat(Number(ob[prop])).toFixed(round));
+	return ob;
 };
