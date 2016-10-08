@@ -479,8 +479,8 @@ describe('date', () => {
 });
 
 describe('string', () => {
-	let word = 'Welcome';
-	let base64 = 'V2VsY29tZQ==';
+	let word = 'welcome';
+	let base64 = 'd2VsY29tZQ==';
 
 	it('base64', (done) => {
 
@@ -496,21 +496,108 @@ describe('string', () => {
 	});
 
 	it('salt', (done) => {
-		let sailt = utils.str.sailt;
+		let salt = utils.str.salt();
 
-		if (!utils.type.isString(sailt) || !sailt.length )  {
-			throw 'Bad work ' + sailt;
+		if (!utils.type.isString(salt) || !salt.length )  {
+			throw 'Bad work ' + salt;
 		}
 
 		done();
 	});
 
 	it('hash', (done) => {
-		if (utils.str.hash(word) !== '3d58c1a3c62bd82b93f4fcfbd47544347178240d92b3760d31c743ce55e6838530a726e57f636ef53a8e7c15ff67b4c89b3f583cce522bce12b85c7d07546e98') {
+		if (utils.str.hash(word) !== 'bf067ea3238bc612fd47ee9b246cedc47be3956fa99c23c403dbc3af3108cc2bc1d52fa592bf82b9b40630bdabc27b1b3ab73274dc086318aba1a030650af19e') {
 			throw 'bad work ' + utils.str.hash(word);
 		}
 
 		done();
 
+	});
+
+	it('up1stChar', (done) => {
+		if (utils.str.up1stChar(word) !== 'Welcome') {
+			throw 'bad work ' + utils.str.up1stChar(word);
+		}
+
+		done();
+
+	});
+
+	it('fullReplace', (done) => {
+
+		if (utils.str.fullReplace('Cucu', 'u', 'i') !== 'Cici') {
+			throw 'bad work ' + utils.str.fullReplace('Cucu', 'u', 'i');
+		}
+
+		done();
+
+	});
+
+	it('regexpEscape', (done) => {
+		if (utils.str.regexpEscape('{Cucu}') !== '\\{Cucu\\}') {
+			throw 'bad work ' + utils.str.regexpEscape('{Cucu}');
+		}
+
+		done();
+
+	});
+
+	it('htmlEscape', (done) => {
+		if (utils.str.htmlEscape('<h1>') !== '&lt;h1&gt;') {
+			throw 'bad work ' + utils.str.htmlEscape('<h1>');
+		}
+
+		done();
+
+	});
+
+	it('removeSpecSymbols', (done) => {
+		if (utils.str.removeSpecSymbols('h$&1') !== 'h 1') {
+			throw 'bad work ' + utils.str.removeSpecSymbols('h  1');
+		}
+
+		done();
+
+	});
+
+	it('oneSpace', (done) => {
+		if (utils.str.oneSpace('h  1') !== 'h 1') {
+			throw 'bad work ' + utils.str.oneSpace('h  1');
+		}
+
+		done();
+
+	});
+
+	it('makeKey', (done) => {
+		let k = utils.str.makeKey();
+		if (!utils.type.isSet(k)) {
+			throw 'bad work ' + k;
+		}
+
+		done();
+
+	});
+
+	it('decodeURIUniversal', (done) => {
+		let ur = '%D0%9F%D0%A0%D0%98%D0%92%D0%95%D0%A2';
+
+		if (utils.str.decodeURIUniversal(ur) !== 'ПРИВЕТ') {
+			throw 'BAD ' + utils.str.decodeURIUniversal(ur);
+		}
+
+		done();
+	});
+
+	it('boolString', (done) => {
+		if (utils.str.boolString('true') !== true) {
+			throw 'Bad result true';
+		}
+
+		if (utils.str.boolString('normal') !== false) {
+			throw 'Bad result false';
+		}
+
+		done();
 	});
 });

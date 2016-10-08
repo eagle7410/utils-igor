@@ -1,3 +1,3 @@
 check
-replace secound
+replace secound, fullReplace
 remove clone, showTime

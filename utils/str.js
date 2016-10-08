@@ -31,14 +31,10 @@ exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
  * @returns {*}
  */
 exports.hash = (str, salt, method , secret) => {
-	let sha = require('crypto').createHmac((method || 'sha512'), (secret || 'IgorStcherbina'));
-	sha.update(String(str), 'utf8');
+	let sha = require('crypto').createHmac((method || 'sha512'), (secret || 'IgorStcherbina'))
+		.update(String(str), 'utf8');
 
-	if (salt) {
-		sha.update(salt);
-	}
-
-	return sha.digest('hex');
+	return (salt ? sha.update(salt) : sha).digest('hex');
 };
 
 /**
