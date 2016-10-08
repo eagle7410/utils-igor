@@ -5,81 +5,87 @@
 
 /**
  * Return date (now or by unixTime).
- * @param {Number}unixTs
+ * @param {Number|null|undefined}ts
  */
-var date = (unixTs) => (unixTs ? new Date(unixTs) : new Date());
+let unix = (ts) => ts || Date.now();
+
 
 /**
- * Get time
+ * Get time string
  * @example '11:40:46'
+ * @param {Number|null|undefined}ts
  */
-exports.time = (unixTs) => (/(\d{2}:\d{2}:\d{2})/.exec(date(unixTs).toTimeString())[1]);
-/**
- * Get date
- * @example '2014-11-30'
- */
-exports.date = (shiftDays, unixTs) => {
+exports.time = (ts) => (/(\d{2}:\d{2}:\d{2})/.exec(new Date(unix(ts)).toTimeString())[1]);
 
-	let now = date(unixTs);
+/**
+ * Get date string
+ * @example date() => '2014-11-30'
+ * @example date(null, null, 'd-m-y') => '30-11-2014'
+ * @param {Number|null}shiftDays
+ * @param {Number|null|undefined}ts
+ * @param {string|null|undefined}format
+ * @returns {string}
+ */
+exports.date = (shiftDays, ts, format) => {
+
+	let now = new Date(unix(ts));
 
 	if (shiftDays) {
 		now.setDate(now.getDate() + Number(shiftDays));
 	}
 
-	let year = now.getFullYear(),
-		month = now.getMonth() + 1; month = (month >= 10 ? month : '0' + month),
-		date = now.getDate();
+	let y = now.getFullYear(),
+		m = now.getMonth() + 1,
+		d = now.getDate();
 
-	return year + '-' + month + '-' + (date >= 10 ? date : '0' + date);
+	return (format || 'y-m-d').replace('y', y).replace('m', (m >= 10 ? m : '0' + m)).replace('d', d >= 10 ? d : '0' + d);
 };
 
 /**
- * Get date time
+ * * Get date time string
  * @example '2014-11-30 11:40:46'
+ * @example dateTime() this work
+ * @param {Number|null|undefined}shiftDays
+ * @param {Number|null|undefined}ts
+ * @param {String|null|undefined}format
  */
-exports.dateTime = function (shiftDays, unixTs) {
-	return exports.date(shiftDays, unixTs) + ' ' + exports.time(unixTs);
-};
+exports.dateTime = (shiftDays, ts, format) => exports.date(shiftDays, ts, format) + ' ' + exports.time(ts);
 
 /**
- * unix-time in seconds
+ * Be round up or down
+ * @param {Number}number
+ * @param {boolean|null}up
+ */
+let round = (number, up) => Math[(up||false) ? 'round' : 'floor'](number);
+
+
+/**
+ * unix-time to seconds
  * @example 1417323330
+ * @param {Number|null|undefined}ts
+ * @param {boolean|null}up
  */
-exports.now = function () {
-	return Math.round(Date.now() / 1000);
-};
-
+exports.tsToSec = (ts, up) => round(((ts || Date.now()) / 1000), up );
 
 /**
- * unix-time in minutes
+ * unix-time to minutes
  * @example 23622056
+ * @param {Number|null|undefined}ts
+ * @param {boolean|null}up
  */
-exports.minute = function () {
-	return Math.round(Date.now() / 60000);
-};
+exports.tsToMin = (ts, up) => round( ((ts || Date.now()) / 60000) , up);
 
 
 /**
- * Return date time in russian format
- * (analogue method toLocaleString('ru-RU'))
- * @param d
- * @returns {string}
+ * seconds to unix-time
+ * @example 1417323330
+ * @param {Number}sec
  */
-exports.showTime = function (d) {
-	var dt = new Date(new Date(d).getTime());
-	var o = {
-		yy: dt.getFullYear().toString(),
-		mm: (dt.getMonth() + 1).toString(),
-		dd: dt.getDate().toString(),
-		h:  dt.getHours().toString(),
-		m:  dt.getMinutes().toString(),
-		s:  dt.getSeconds().toString()
-	};
+exports.secToTs = (sec) => sec * 1000;
 
-	return ((o.yy.length < 2) ? ('0' + o.dd) : o.dd) + '-' +
-		((o.mm.length < 2) ? ('0' + o.mm) : o.mm) + '-' +
-		o.yy + ' ' +
-		((o.h.length < 2)  ? ('0' + o.h)  : o.h) + '-' +
-		((o.m.length < 2)  ? ('0' + o.m)  : o.m) + '-' +
-		((o.s.length < 2)  ? ('0' + o.s)  : o.s);
-};
+/**
+ * minutes to unix-time
+ * @example 23622056
+ * @param {Number}min
+ */
+exports.minToTs = (min) => min * 60000;

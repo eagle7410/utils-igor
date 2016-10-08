@@ -232,10 +232,10 @@ describe('object', () => {
 		done();
 	});
 
-	it('for', (done) => {
+	it('each', (done) => {
 		let o = {p1 : 1 , p2 : 2};
 
-		utils.obj.for(o, (k, v) => o[k] = ++v);
+		utils.obj.each(o, (k, v) => o[k] = ++v);
 
 		if (o.p1 !== 2 || o.p2 !== 3) {
 			throw 'No correct inc';
@@ -412,9 +412,66 @@ describe('object', () => {
 });
 
 describe('date', () => {
+	let ts = 1475825015612;
+
 	it('date', (done) => {
-		if (utils.date.date(null, 1475825004412) === '2016-10-07') {
-			throw 'Bab work ' + utils.date.date(null, 1475825004412);
+
+		if (utils.date.date(null, ts) !== '2016-10-07') {
+			throw 'Bab work ' + utils.date.date(null, ts);
+		}
+
+		done();
+	});
+
+	it('time', (done) => {
+
+		if (utils.date.time(ts) !== '08:23:35') {
+			throw 'Bab work ' + utils.date.time(ts);
+		}
+
+		done();
+	});
+
+
+	it('tsToMin', (done) => {
+
+		if (utils.date.tsToMin(ts) !== 24597083) {
+			throw 'Bab work down ' + utils.date.tsToMin(ts)
+		}
+
+		if (utils.date.tsToMin(ts,true) !== 24597084) {
+			throw 'Bab work up ' + utils.date.tsToMin(ts,true);
+		}
+
+		done();
+	});
+
+	it('tsToSec', (done) => {
+
+		if (utils.date.tsToSec(ts) !== 1475825015) {
+			throw 'Bab work down ' + utils.date.tsToSec(ts)
+		}
+
+		if (utils.date.tsToSec(ts,true) !== 1475825016) {
+			throw 'Bab work up ' + utils.date.tsToSec(ts,true);
+		}
+
+		done();
+	});
+
+	it('minToTs', (done) => {
+
+		if (utils.date.minToTs(1475825015) !== 88549500900000) {
+			throw 'Bab work  ' + utils.date.minToTs(1475825015);
+		}
+
+		done();
+	});
+
+	it('secToTs', (done) => {
+
+		if (utils.date.secToTs(1475825015) !== 1475825015000) {
+			throw 'Bab work  ' + utils.date.secToTs(1475825015);
 		}
 
 		done();

@@ -5,8 +5,8 @@
 "use strict";
 
 /**
- * Login includes modules
- * @param {mixed}type
+ * Logic includes modules
+ * @param {Array|String|undefined|null}type
  * @returns {{}}
  */
 module.exports = (type) => {
@@ -19,18 +19,18 @@ module.exports = (type) => {
 	];
 
 	let module = {};
+	let i = 0;
 
 	if (!type)
-		for (let i = 0; i<have.length; ++i)
+		for (; i<have.length; i++)
 			module[have[i]] = require('./utils/' + have[i]);
 
 	 else if (Array.isArray(type))
-		for (var i = 0, len = type.length; i<len; ++i)
-			if (have.indexOf(type[i]) > -1 )
+		for (; i< type.length; i++)
+			if (~have.indexOf(type[i]))
 				module[type[i]] = require('./utils/' + type[i]);
-	 else
-		if (have.indexOf(type) > -1 )
-			module = require('./utils/' + type);
+	 else if (~have.indexOf(type))
+		module = require('./utils/' + type);
 
 	return module;
 };

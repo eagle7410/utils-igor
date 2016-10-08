@@ -4,7 +4,6 @@
 "use strict";
 
 const base = 'base64';
-let crypto	= require('crypto');
 
 /**
  *Return string encode/decode in base64
@@ -25,16 +24,16 @@ exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
 /**
  * Return string hash
  * @param str {String}
- * @param salt {String}
- * @param secret {String}
- * @param method {String} md5, sha512, sha256
+ * @param {String|null|undefined}salt
+ * @param {String|null|undefined}secret
+ * @param {'md5'|'sha512'|'sha256'|null|undefined}method
  * @returns {*}
  */
 exports.hash = (str, salt, method , secret) => {
 	method = method || 'sha512';
 	secret = secret || 'IgorStcherbina';
 
-	var sha = crypto.createHmac(method, secret);
+	var sha = require('./node_modules/crypto').createHmac(method, secret);
 
 	sha.update(String(str), 'utf8');
 
@@ -47,7 +46,7 @@ exports.hash = (str, salt, method , secret) => {
 
 /**
  * Return string, fist char in upper case.
- * @param s
+ * @param {string}s
  * @returns {string}
  */
 exports.up1stChar  = (s) => s.substring(0, 1).toUpperCase() + s.substring(1);
@@ -64,18 +63,18 @@ exports.regexpEscape = (text) => text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
  * @param {String}find
  * @param {String}replace
  */
-exports.replaceAll = (str, find, replace) => str.replace(new RegExp(exports.regexpEscape(find), 'g'), replace);
+exports.fullReplace = (str, find, replace) => str.replace(new RegExp(exports.regexpEscape(find), 'g'), replace);
 
 /**
  * Escapes special characters for html and trim unnecessary
  * @param {String}str
- * @param {Number}maxLength
+ * @param {Number|null|undefined}maxLength
  * @returns {*}
  */
 exports.htmlEscape = (str, maxLength) => {
 
 	if (str && str.length) {
-		str = exports.replaceAll(exports.replaceAll(str, '<', '&lt;'), '>', '&gt;');
+		str = exports.fullReplace(exports.fullReplace(str, '<', '&lt;'), '>', '&gt;');
 
 		if (maxLength)
 			str = str.substr(0, maxLength);
@@ -97,11 +96,12 @@ exports.oneSpace = (str) => str.replace(/\s\s+/g, ' ').trim();
  * @param  {String} str string
  * @return {String} Output string
  */
-exports.removeSpecSymbols = (str) =>  exports.removeSpaces(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
+exports.removeSpecSymbols = (str) =>  exports.oneSpace(str.replace(/[&\/\\#,+()$~%.`'":*?!<>{}\[\]]/g, ' '));
 
 /**
  * It generates key specified length. Used accept symbols
- * @param n
+ * @param {String|null|undefined}accept
+ * @param {Number|null|undefined}n
  * @returns {string}
  */
 exports.makeKey = (n, accept) => {
@@ -141,7 +141,7 @@ exports.decodeURIUniversal = (str) => {
 /**
  * Return value after convert string boolean to boolean.
  * if vl === 'true' then vl = true. Other vl = false
- * @param vl
+ * @param {String}vl
  * @returns {Boolean}
  */
-exports.boolString = (vl) => vl === 'true' ? true : false ;
+exports.boolString = (vl) => vl === 'true';

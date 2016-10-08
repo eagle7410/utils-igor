@@ -4,19 +4,19 @@
 "use strict";
 
 /**
- * Check parametr be array. if not return empty array
- * @param {Mixed} arr
+ * Check parameter be array. if not return empty array
+ * @param {*} arr
  */
 exports.check = (arr) => Array.isArray(arr) ? arr : [];
 
-let check = exports.check;
+var check = exports.check;
 
 /**
  * By default the sort method sorts elements alphabetically.
  * To sort numerically just add a new method which handles numeric sorts
  * e.g. [11, 1, 2].sort(utils.sortNumber);
- * @param a
- * @param b
+ * @param {Number}a
+ * @param {Number}b
  * @returns {number}
  */
 exports.sortNumber = (a, b)  => parseFloat(a) - parseFloat(b);
@@ -26,7 +26,7 @@ exports.sortNumber = (a, b)  => parseFloat(a) - parseFloat(b);
  * @param arr2
  * @returns {Array}
  */
-module.exports.share = (arr1, arr2) => check(arr1).filter( (val) => check(arr2).indexOf(val) !== -1 );
+exports.share = (arr1, arr2) => check(arr1).filter( (val) => check(arr2).indexOf(val) !== -1 );
 
 /**
  * Return different part of the array
@@ -45,7 +45,7 @@ exports.unique = (arr) => check(arr).filter((value, index, self) => self.indexOf
 /**
  * Delete all elements whith specified value
  * @param {Array} arr массив для очистки
- * @param {Mixed} value значение
+ * @param {*} value значение
  * @constructor
  */
 exports.mvVal = (arr, value) => check(arr).filter((i) => arr[i] !== value);
@@ -58,14 +58,14 @@ exports.sum = (a) => (Array.isArray(a)) ? a.reduce( (pv, cv) => (isNaN(pv) ? 0 :
 
 /**
  * Return average elements array
- * @param a
+ * @param {Array}a
  * @returns {number}
  */
 exports.avg = (a) => (!Array.isArray(a) || !a.length ) ? 0 : exports.sum(a) / a.length;
 
 /**
  * Return array. When element is url collect from specified array
- * @param arr
+ * @param {Array}arr
  * @returns {Array}
  */
 exports.urls = (arr) => {

@@ -8,13 +8,13 @@
  * Return object. When keys is specified property, value is object from array objects
  * @param {Array}arr
  * @param {String}prop
- * @param {Function}fn
+ * @param {Function}fnIterProp
  * @returns {{}}
  */
 exports.arrToObjByKey = (arr, prop, fnIterProp) => {
 	var obj = {};
 
-	if (!Array.isArray(arr))
+	if (!Array.isArray(arr) || !prop)
 		return obj;
 
 	for (let i = 0; i< arr.length; ++i) {
@@ -36,7 +36,7 @@ exports.arrToObjByKey = (arr, prop, fnIterProp) => {
 /**
  * Get properties from obj by keys
  * @param {object} obj
- * @param {Mixed} keys {keyOld : keyNew,...}
+ * @param {*} keys [{keyOld : keyNew,...}]
  * @returns {{}}
  */
 exports.keysChange = (obj, keys) => {
@@ -67,6 +67,7 @@ exports.keysChange = (obj, keys) => {
 /**
  * Return new object when keys be sort
  * @param {Object}obj
+ * @param {Boolean}down
  * @returns {{}}
  */
 exports.sort = (obj, down) => {
@@ -131,8 +132,9 @@ exports.beInObj = (ob, prop, def) => {
 
 /**
  * Create path in object
- * @param {Object}obj
- * @param {Mixed}path
+ * @param {Object|Array|String}obj
+ * @param {Array|String|null|undefined}path
+ * @param {*}def
  */
 exports.pathCreate = function(obj, path, def) {
 
@@ -167,7 +169,7 @@ exports.pathCreate = function(obj, path, def) {
 /**
  * Check exist path in object
  * @param {Object}obj
- * @param {Mixed} path
+ * @param {*} path
  * @returns {Boolean}
  */
 exports.isPathExist = (obj, path) => {
@@ -247,7 +249,7 @@ exports.pathMv = (obj, path) => {
 exports.urlParams = (obj) => {
 	let arr = [];
 
-	exports.for(obj, (key, val) => arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)) );
+	exports.each(obj, (key, val) => arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)) );
 
 	return arr.join('&');
 };
@@ -260,7 +262,7 @@ exports.urlParams = (obj) => {
  */
 exports.ext = (obj, add) => {
 	let j = (obj, op) => {
-		exports.for(op, function (k, val) {
+		exports.each(op, function (k, val) {
 			if (isObj(val))
 				if (!obj[k])
 					obj[k] = val;
@@ -290,7 +292,7 @@ let isObj = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
 /**
  * Check v be no undefined or null
- * @param {Mixed}v
+ * @param {*}v
  */
 let isSet = (v) => typeof v !== 'undefined' && v !== null;
 
@@ -324,7 +326,7 @@ exports.propToArr = (obj) => {
 	if (!isObj(obj))
 		return arr;
 
-	exports.for(obj, (key) => arr.push(obj[key]));
+	exports.each(obj, (key) => arr.push(obj[key]));
 
 	return arr;
 };
@@ -334,7 +336,7 @@ exports.propToArr = (obj) => {
  * @param {Object}obj
  * @param {Function}fn
  */
-exports.for = (obj, fn) => {
+exports.each = (obj, fn) => {
 
 	if (isObj(obj)) {
 		fn = typeof fn !== 'function' ? function(){} : fn;
