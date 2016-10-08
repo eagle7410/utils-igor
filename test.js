@@ -477,3 +477,18 @@ describe('date', () => {
 		done();
 	});
 });
+
+describe('string', () => {
+	let word = 'Welcome';
+	let base64 = 'V2VsY29tZQ==';
+	it('base64', (done) => {
+
+		if(utils.str.base64(word) !== base64) {
+			throw 'Bab encode ' + utils.str.base64(word);
+		}
+
+		if(utils.str.base64(base64, true) !== word) {
+			throw 'Bab decode ' + utils.str.base64(word);
+		}
+	})
+});
