@@ -75,7 +75,19 @@ To include more than one block change
 
 ### Version
 ----
-1.0.0
+2.0.0
+What is new ?
+	- Used "use strict" mode.
+	- Used minification js files.
+	- Attach unit test
+	- Maximum use ESMA6 within Node 4.x.x
+	- Change :
+	    Remove function obj.clone him be in type.cloneVar
+	    Remove function date.showTime add parameter format in date.date
+	    Add new function arr.check
+	    And etc...
+
+
 
 
 ### People

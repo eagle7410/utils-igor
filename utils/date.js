@@ -1,5 +1,7 @@
 /**
  * Created by igor on 30.05.16.
+ * @module date
+ * @description Function for date
  */
 "use strict";
 

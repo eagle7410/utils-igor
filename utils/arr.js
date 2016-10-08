@@ -1,5 +1,7 @@
 /**
  * Created by igor on 30.05.16.
+ * @module arr
+ * @description Function for array
  */
 "use strict";
 

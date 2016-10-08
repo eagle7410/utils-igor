@@ -1,5 +1,7 @@
 /**
  * Created by igor on 30.05.16.
+ * @module obj
+ * @description Function for object
  */
 
 "use strict";

@@ -1,5 +1,7 @@
 /**
  * Created by igor on 30.05.16.
+ * @module type
+ * @description Working with types
  */
 "use strict";
 /**

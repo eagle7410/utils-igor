@@ -1,5 +1,7 @@
 /**
  * Created by igor on 30.05.16.
+ * @module str
+ * @description Function for string
  */
 "use strict";
 
