@@ -481,6 +481,7 @@ describe('date', () => {
 describe('string', () => {
 	let word = 'Welcome';
 	let base64 = 'V2VsY29tZQ==';
+
 	it('base64', (done) => {
 
 		if(utils.str.base64(word) !== base64) {
@@ -490,5 +491,26 @@ describe('string', () => {
 		if(utils.str.base64(base64, true) !== word) {
 			throw 'Bab decode ' + utils.str.base64(word);
 		}
-	})
+
+		done()
+	});
+
+	it('salt', (done) => {
+		let sailt = utils.str.sailt;
+
+		if (!utils.type.isString(sailt) || !sailt.length )  {
+			throw 'Bad work ' + sailt;
+		}
+
+		done();
+	});
+
+	it('hash', (done) => {
+		if (utils.str.hash(word) !== '3d58c1a3c62bd82b93f4fcfbd47544347178240d92b3760d31c743ce55e6838530a726e57f636ef53a8e7c15ff67b4c89b3f583cce522bce12b85c7d07546e98') {
+			throw 'bad work ' + utils.str.hash(word);
+		}
+
+		done();
+
+	});
 });

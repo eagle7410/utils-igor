@@ -17,6 +17,7 @@ exports.base64 = (str , decode) => !(decode || false)
 
 /**
  * Return salt
+ * @param {Number|null|undefined} len
  * @return {String} salt
  */
 exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
@@ -30,11 +31,7 @@ exports.salt = (len) => Math.random().toString(36).substring(2, (len || 5) + 2);
  * @returns {*}
  */
 exports.hash = (str, salt, method , secret) => {
-	method = method || 'sha512';
-	secret = secret || 'IgorStcherbina';
-
-	var sha = require('./node_modules/crypto').createHmac(method, secret);
-
+	let sha = require('crypto').createHmac((method || 'sha512'), (secret || 'IgorStcherbina'));
 	sha.update(String(str), 'utf8');
 
 	if (salt) {
