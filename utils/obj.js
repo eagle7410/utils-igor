@@ -334,16 +334,21 @@ exports.propToArr = (obj) => {
 };
 
 /**
- * ForEach for Object fn(key, val)
+ * ForEach for Object fn(key, val) and sort keys by fnSort
  * @param {Object}obj
  * @param {Function}fn
+ * @param {Function}fnSort
  */
-exports.each = (obj, fn) => {
+exports.each = (obj, fn, fnSort) => {
 
 	if (isObj(obj)) {
 		fn = typeof fn !== 'function' ? function(){} : fn;
 
 		let keys = Object.keys(obj);
+
+		if (fnSort) {
+			keys = keys.sort(fnSort);
+		}
 
 		for (let i = 0, len = keys.length; i<len; ++i)
 			fn(keys[i], obj[keys[i]]);
