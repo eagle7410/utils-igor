@@ -91,3 +91,21 @@ exports.secToTs = (sec) => sec * 1000;
  * @param {Number}min
  */
 exports.minToTs = (min) => min * 60000;
+
+/**
+ * Time constant in milliseconds
+ * @type {{MINUTE: number, HOUR: number, DAY: number, WEEK: number, MONTH: number, YEAR: number}}
+ */
+exports.ts = {
+	MINUTE : 60000,
+	HOUR : 3600000,
+	DAY : 86400000,
+	WEEK : 604800000,
+	MONTH : 18144000000,
+	YEAR : 6622560000000
+};
+
+
+
+
+

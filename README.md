@@ -222,6 +222,7 @@ Function for date
 
 * [date](#module_date)
     * _static_
+        * [.ts](#module_date.ts) : <code>Object</code>
         * [.time(ts)](#module_date.time)
         * [.date(shiftDays, ts, format)](#module_date.date) ⇒ <code>string</code>
         * [.dateTime(shiftDays, ts, format)](#module_date.dateTime)
@@ -233,6 +234,12 @@ Function for date
         * [~unix(ts)](#module_date..unix)
         * [~round(number, up)](#module_date..round)
 
+<a name="module_date.ts"></a>
+
+### date.ts : <code>Object</code>
+Time constant in milliseconds
+
+**Kind**: static property of <code>[date](#module_date)</code>  
 <a name="module_date.time"></a>
 
 ### date.time(ts)
@@ -396,7 +403,7 @@ Function for object
         * [.ext(obj, add)](#module_obj.ext) ⇒ <code>\*</code>
         * [.getPropToArr(arObj, prop)](#module_obj.getPropToArr) ⇒ <code>Array</code>
         * [.propToArr(obj)](#module_obj.propToArr) ⇒ <code>Array</code>
-        * [.each(obj, fn)](#module_obj.each)
+        * [.each(obj, fn, fnSort)](#module_obj.each)
         * [.isEmpty(obj)](#module_obj.isEmpty) ⇒ <code>boolean</code>
         * [.beRound(ob, prop, round)](#module_obj.beRound)
     * _inner_
@@ -563,8 +570,8 @@ Collect object property to array
 
 <a name="module_obj.each"></a>
 
-### obj.each(obj, fn)
-ForEach for Object fn(key, val)
+### obj.each(obj, fn, fnSort)
+ForEach for Object fn(key, val) and sort keys by fnSort
 
 **Kind**: static method of <code>[obj](#module_obj)</code>  
 
@@ -572,6 +579,7 @@ ForEach for Object fn(key, val)
 | --- | --- |
 | obj | <code>Object</code> | 
 | fn | <code>function</code> | 
+| fnSort | <code>function</code> | 
 
 <a name="module_obj.isEmpty"></a>
 
@@ -855,7 +863,7 @@ Check parameter is object
 if fn is not function change to empty function
 
 **Kind**: static method of <code>[type](#module_type)</code>  
-ss
+
 | Param | Type |
 | --- | --- |
 | fn | <code>function</code> | 
@@ -882,14 +890,12 @@ Check this value is number
 | --- | --- |
 | n | <code>Number</code> | 
 
-
-
 ### Version
 ----
-2.0.0
+2.0.0  
 What is new ?  
-  - Used "use strict" mode.  
-  - Used minification js files.  
+	- Used "use strict" mode.  
+	- Used minification js files.  
 	- Attach unit test  
 	- Maximum use ESMA6 within Node 4.x.x  
 	- Change :  
@@ -897,6 +903,8 @@ What is new ?
 	    Remove function date.showTime add parameter format in date.date  
 	    Add new function arr.check  
 	    And etc...  
+2.0.2  
+ Adding time constant in date module  
 
 
 ### People

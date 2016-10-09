@@ -1,6 +1,6 @@
 {
   "name": "utils-igor",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Utils for nodeJs",
   "homepage": "https://github.com/eagle7410/utils-igor",
   "author": {
@@ -38,7 +38,7 @@
     "type": "git",
     "url": "https://github.com/eagle7410/utils-igor.git"
   },
-  "_id": "utils-igor@2.0.1",
+  "_id": "utils-igor@2.0.2",
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",

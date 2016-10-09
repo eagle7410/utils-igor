@@ -86,8 +86,8 @@ What is new ?
 	    Remove function date.showTime add parameter format in date.date
 	    Add new function arr.check
 	    And etc...
-
-
+2.0.2
+ Adding time constant in date module
 
 
 ### People
