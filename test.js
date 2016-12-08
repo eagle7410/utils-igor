@@ -425,7 +425,7 @@ describe('date', () => {
 
 	it('time', (done) => {
 
-		if (utils.date.time(ts) !== '08:23:35') {
+		if (utils.date.time(ts) !== '10:23:35') {
 			throw 'Bab work ' + utils.date.time(ts);
 		}
 

@@ -50,7 +50,7 @@ exports.unique = (arr) => check(arr).filter((value, index, self) => self.indexOf
  * @param {*} value значение
  * @constructor
  */
-exports.mvVal = (arr, value) => check(arr).filter((i) => arr[i] !== value);
+exports.mvVal = (arr, value) => check(arr).filter((v) => v !== value);
 
 /**
  * Sum of array elements

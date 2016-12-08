@@ -890,22 +890,24 @@ Check this value is number
 | --- | --- |
 | n | <code>Number</code> | 
 
+
 ### Version
 ----
-2.0.0  
-What is new ?  
-	- Used "use strict" mode.  
-	- Used minification js files.  
-	- Attach unit test  
-	- Maximum use ESMA6 within Node 4.x.x  
-	- Change :  
-	    Remove function obj.clone him be in type.cloneVar  
-	    Remove function date.showTime add parameter format in date.date  
-	    Add new function arr.check  
-	    And etc...  
-2.0.2  
- Adding time constant in date module  
-
+2.0.0
+What is new ?
+	- Used "use strict" mode.
+	- Used minification js files.
+	- Attach unit test
+	- Maximum use ESMA6 within Node 4.x.x
+	- Change :
+	    Remove function obj.clone him be in type.cloneVar
+	    Remove function date.showTime add parameter format in date.date
+	    Add new function arr.check
+	    And etc...
+2.0.2
+ Adding time constant in date module
+2.0.3
+ Correct function arr.mvVal
 
 ### People
 ----
