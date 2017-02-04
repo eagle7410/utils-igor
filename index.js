@@ -23,15 +23,15 @@ module.exports = (type) => {
 	let module = {};
 	let i = 0;
 
-	if (!type)
-		for (; i<have.length; i++)
+	if (!type) {
+		for (; i < have.length; i++)
 			module[have[i]] = require(`./${attach}utils/${have[i]}`);
 
-	 else if (Array.isArray(type))
-		for (; i< type.length; i++)
+	} else if (Array.isArray(type)) {
+		for (; i < type.length; i++)
 			if (~have.indexOf(type[i]))
 				module[type[i]] = require(`./${attach}utils/${type[i]}`);
-	 else if (~have.indexOf(type))
+	} else if (~have.indexOf(type))
 		module = require(`./${attach}utils/${type}`);
 
 	return module;
